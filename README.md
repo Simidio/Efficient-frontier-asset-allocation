@@ -1,7 +1,7 @@
 # Efficient-frontier-asset-allocation
 The Efficient Frontier Model is a fundamental concept in modern portfolio theory, developed by Nobel laureate Harry Markowitz in the 1950s. The model seeks to optimize the allocation of assets in a portfolio to achieve the highest possible return for a given level of risk or to minimize the risk for a desired level of return. It provides a quantitative framework to make rational investment decisions based on the trade-off between risk and return.
 
-The Efficient Frontier Model has several implications for investors:
+Implications for investors:
 
 Risk Diversification: The model emphasizes the importance of diversifying investments across multiple assets to reduce portfolio risk without sacrificing potential returns.
 Risk-Return Trade-off: The model illustrates that higher returns generally come with higher levels of risk. Investors must decide how much risk they are willing to accept to achieve their desired level of return.
