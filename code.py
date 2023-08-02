@@ -5,11 +5,11 @@ from pandas_datareader import data as pdr
 import yfinance as yf
 from scipy.optimize import minimize
 
-# Imposta il periodo di analisi
+# Set the analysis period
 start_date = '2010-01-01'
 end_date = '2021-12-31'
 
-# Scarica i dati storici degli ETF
+# Download historical ETF data
 tickers = ['VT', 'SPY', 'VGK', 'EWU', 'MCHI', 'EEM', 'EWJ', 'AAXJ', 'QQQ', 'MTUM', 'QUAL', 'VLUE', 'DBC', 'TLT']
 data = pd.DataFrame(columns=tickers)
 
@@ -19,25 +19,25 @@ for t in tickers:
     except:
         data[t] = yf.download(t, start=start_date, end=end_date)['Adj Close']
 
-# Calcola i rendimenti giornalieri
+# Calculate daily returns
 returns = data.pct_change().dropna()
 
-# Calcola i rendimenti attesi e le covarianze dei rendimenti
+# Calculate expected returns and covariances of returns
 mean_returns = returns.mean()
 cov_matrix = returns.cov()
 
-# Definisci il numero di portafogli casuali da generare
+# Define the number of random wallets to generate
 num_portfolios = 10000
 
-# Definisci la funzione per calcolare la varianza del portafoglio
+# Define the function to calculate the variance of the portfolio
 def portfolio_volatility(weights, cov_matrix):
     """
-    Calcola la varianza del portafoglio dati i pesi degli asset e la matrice di covarianza.
+    Calculate the variance of the portfolio given the asset weights and the covariance matrix.
     """
     portfolio_variance = np.dot(weights.T, np.dot(cov_matrix, weights))
     return np.sqrt(portfolio_variance)
 
-# Genera portafogli casuali con pesi casuali per gli ETF
+# Generate random portfolios with random weights for ETFs
 all_weights = np.zeros((num_portfolios, len(tickers)))
 ret_arr = np.zeros(num_portfolios)
 vol_arr = np.zeros(num_portfolios)
@@ -48,11 +48,11 @@ for i in range(num_portfolios):
     weights = weights / np.sum(weights)
     all_weights[i, :] = weights
 
-    # Calcola i rendimenti e le varianze del portafoglio generato
+    # Calculate the returns and variances of the generated portfolio
     ret_arr[i] = np.sum(mean_returns * weights) * 252
     vol_arr[i] = portfolio_volatility(weights, cov_matrix) * np.sqrt(252)
 
-# Calcola il portafoglio con il massimo rapporto di Sharpe
+# Calculate portfolio with maximum Sharpe ratio
 rf_rate = 0.01  # Tasso di interesse senza rischio
 sharpe_arr = (ret_arr - rf_rate) / vol_arr
 max_sharpe_idx = sharpe_arr.argmax()
@@ -60,7 +60,7 @@ optimal_weights = all_weights[max_sharpe_idx, :]
 optimal_returns = ret_arr[max_sharpe_idx]
 optimal_volatility = vol_arr[max_sharpe_idx]
 
-# Calcola la frontiera efficiente
+# Calculate the efficient frontier
 frontier_returns = []
 frontier_volatility = []
 frontier_portfolio_components = []
@@ -76,7 +76,7 @@ for r in np.linspace(0, 0.3, 100):
     frontier_volatility.append(portfolio_volatility(weights, cov_matrix) * np.sqrt(252))
     frontier_portfolio_components.append(weights)
 
-# Visualizza la frontiera efficiente e il portafoglio ottimale
+# Visualize the efficient frontier and the optimal portfolio
 plt.figure(figsize=(12, 8))
 plt.scatter(vol_arr*100, ret_arr*100, alpha=0.2, label='Portafogli casuali')
 plt.scatter(optimal_volatility*100, optimal_returns*100, color='red', marker='*', s=300, label='Portafoglio ottimale')
@@ -89,16 +89,16 @@ plt.ylim(bottom=0)
 plt.legend()
 plt.show()
 
-# Crea una tabella con i portafogli e i loro rendimenti e volatilità
+# Create a table with portfolios and their returns and volatilities
 portfolio_table = pd.DataFrame(columns=['Rendimento atteso', 'Volatilità', 'VT', 'SPY', 'VGK', 'EWU', 'MCHI', 'EEM', 'EWJ', 'AAXJ', 'QQQ', 'MTUM', 'QUAL', 'VLUE', 'DBC', 'TLT'])
 
 for i in range(num_portfolios):
     portfolio_table.loc[i] = [ret_arr[i], vol_arr[i]] + list(all_weights[i, :])
 
-# Visualizza la tabella
+# View the table
 print(portfolio_table)
 
-# Visualizza i pesi del portafoglio ottimale
+# Displays optimal portfolio weights
 print('Pesi del portafoglio ottimale:')
 for i in range(len(optimal_weights)):
     print(tickers[i], ':', round(optimal_weights[i]*100, 2), '%')
