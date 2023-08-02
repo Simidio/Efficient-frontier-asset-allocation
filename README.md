@@ -3,10 +3,10 @@ The Efficient Frontier Model is a fundamental concept in modern portfolio theory
 
 **Implications for investors**:
 
--Risk Diversification: The model emphasizes the importance of diversifying investments across multiple assets to reduce portfolio risk without sacrificing potential returns.
--Risk-Return Trade-off: The model illustrates that higher returns generally come with higher levels of risk. Investors must decide how much risk they are willing to accept to achieve their desired level of return.
--Optimal Portfolio Selection: Investors can identify their optimal portfolios by selecting points on the efficient frontier that align with their risk preferences and return objectives.
--Portfolio Rebalancing: As market conditions change, portfolio positions may drift away from the efficient frontier. Regular portfolio rebalancing is necessary to maintain the desired risk-return profile.
+*Risk Diversification: The model emphasizes the importance of diversifying investments across multiple assets to reduce portfolio risk without sacrificing potential returns.
+*Risk-Return Trade-off: The model illustrates that higher returns generally come with higher levels of risk. Investors must decide how much risk they are willing to accept to achieve their desired level of return.
+*Optimal Portfolio Selection: Investors can identify their optimal portfolios by selecting points on the efficient frontier that align with their risk preferences and return objectives.
+*Portfolio Rebalancing: As market conditions change, portfolio positions may drift away from the efficient frontier. Regular portfolio rebalancing is necessary to maintain the desired risk-return profile.
 
 **The Role of Correlation in Asset Allocation**:
 
